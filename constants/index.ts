@@ -206,27 +206,40 @@ export const interviewCovers = [
 
 // src/constants/index.ts (or src/constants.ts)
 
-export const dummyInterviews: Interview[] = [
+// constants/index.js or wherever your dummyInterviews is defined
+
+export const dummyInterviews = [
   {
     id: "1",
+    interviewId: "1",
     userId: "user1",
     role: "Frontend Developer",
     type: "Technical",
-    techstack: ["React", "TypeScript", "Next.js", "Tailwind CSS"],
-    level: "Junior",
-    questions: ["What is React?"],
-    finalized: false,
-    createdAt: "2024-03-15T10:00:00Z",
+    techstack: "React, JavaScript, HTML, CSS",
+    createdAt: "2024-01-15T10:00:00.000Z",
+    level: "Mid-level",
+    questions: ["What is React?", "Explain virtual DOM", "What are hooks?"]
   },
   {
-    id: "2",
+    id: "2", 
+    interviewId: "2",
+    userId: "user1",
+    role: "Backend Developer",
+    type: "Technical",
+    techstack: "Node.js, Express, MongoDB",
+    createdAt: "2024-01-16T14:30:00.000Z",
+    level: "Senior",
+    questions: ["What is Node.js?", "Explain event loop", "Database design principles"]
+  },
+  {
+    id: "3",
+    interviewId: "3", 
     userId: "user1",
     role: "Full Stack Developer",
     type: "Mixed",
-    techstack: ["Node.js", "Express", "MongoDB", "React"],
-    level: "Senior",
-    questions: ["What is Node.js?"],
-    finalized: false,
-    createdAt: "2024-03-14T15:30:00Z",
-  },
+    techstack: "React, Node.js, PostgreSQL",
+    createdAt: "2024-01-17T09:15:00.000Z",
+    level: "Mid-level",
+    questions: ["System design", "API design", "Frontend optimization"]
+  }
 ];

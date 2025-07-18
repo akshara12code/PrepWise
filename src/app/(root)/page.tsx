@@ -2,11 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Image from "next/image"
-// Try different import paths - use the one that works for your structure
-import { dummyInterviews } from '../../../constants'; // Option 1: if using @ alias
-// import { dummyInterviews } from '../../../constants'; // Option 2: relative path
-// import { dummyInterviews } from '../../../constants/index'; // Option 3: explicit index
-
+import { dummyInterviews } from '../../../constants'; // Fixed import path
 import InterviewCard from '@/components/InterviewCard';
 
 const Page = () => {
@@ -30,15 +26,20 @@ const Page = () => {
           className="max-sm:hidden"
         />
       </section>
-      
+     
       <section className="flex flex-col gap-6 mt-8">
         <h2>Your Interview</h2>
         <div className="interviews-section">
           {dummyInterviews.length > 0 ? (
             dummyInterviews.map((interview) => (
-              <InterviewCard 
+              <InterviewCard
                 key={interview.id}
-                {...interview}
+                interviewId={interview.id}
+                userId="user1" // Add actual user ID here
+                role={interview.role}
+                type={interview.type || "Mixed"} // Add type or default to "Mixed"
+                techstack={interview.techstack}
+                createdAt={interview.createdAt || new Date().toISOString()} // Add createdAt or default to current date
               />
             ))
           ) : (
@@ -46,15 +47,20 @@ const Page = () => {
           )}
         </div>
       </section>
-      
+     
       <section className="flex flex-col gap-6 mt-8">
         <h2>Take an Interview</h2>
         <div className="interview-section">
           {dummyInterviews.length > 0 ? (
             dummyInterviews.map((interview) => (
-              <InterviewCard 
+              <InterviewCard
                 key={interview.id}
-                {...interview}
+                interviewId={interview.id}
+                userId="user1" // Add actual user ID here
+                role={interview.role}
+                type={interview.type || "Mixed"} // Add type or default to "Mixed"
+                techstack={interview.techstack}
+                createdAt={interview.createdAt || new Date().toISOString()} // Add createdAt or default to current date
               />
             ))
           ) : (

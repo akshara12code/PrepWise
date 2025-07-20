@@ -8,6 +8,10 @@ import InterviewCard from '@/components/InterviewCard';
 const Page = () => {
   return (
     <>
+     <div className="flex items-center mt-8 mb-4 ml-8">
+        <Image src="/logo.svg" alt="PrepWise Logo" width={48} height={48} />
+        <span className="ml-3 text-2xl font-bold text-primary-100">PrepWise</span>
+      </div>
       <section className="card-cta my-10 mx-20">
         <div className="flex flex-col gap-6 max-w-lg">
           <h2>Get Interview-Ready with AI-Powered Practice & Feedback</h2>

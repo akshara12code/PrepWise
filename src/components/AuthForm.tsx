@@ -87,7 +87,8 @@ const AuthForm = ({ type }: { type: FormType }) => {
         });
 
         toast.success("Signed in successfully.");
-        router.push("/");
+        // ✅ FIXED: Redirect to dashboard instead of root to avoid infinite loop
+        router.push("/dashboard");
       }
     } catch (error) {
       console.log(error);

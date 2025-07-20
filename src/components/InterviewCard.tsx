@@ -67,15 +67,15 @@ const InterviewCard = async ({ interviewId, userId, role, type, techstack, creat
             </div>
             <div className="flex flex-row gap-2 items-center">
               <Image src="/star.svg" width={22} height={22} alt="star" />
-              {/* <p>{feedback?.totalScore || "---"}/100</p> */}
+              <p>{feedback?.totalScore || "---"}/100</p>
             </div>
           </div>
          
           {/* Feedback or Placeholder Text */}
-          {/* <p className="line-clamp-2 mt-5">
+          <p className="line-clamp-2 mt-5">
             {feedback?.finalAssessment ||
               "You haven't taken this interview yet. Take it now to improve your skills."}
-          </p> */}
+          </p>
         </div>
         
         <div className="flex flex-row justify-between items-center mt-4">

@@ -32,7 +32,7 @@ const Page = () => {
       </section>
      
       <section className="flex flex-col gap-6 mt-8 my-20 ml-20">
-        <h2>Your Interview</h2>
+        <h2>Your Interviews</h2>
         <div className="interviews-section">
           {dummyInterviews.length > 0 ? (
             dummyInterviews.map((interview) => (

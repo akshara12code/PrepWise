@@ -1,5 +1,6 @@
 "use server";
 import { auth, db } from "@/firebase/admin";
+import { CollectionReference, Query } from "firebase-admin/firestore";
 import { cookies } from "next/headers";
 
 // Session duration (1 week)
@@ -186,49 +187,26 @@ export async function signOut() {
 
 // Get current user from session cookie
 export async function getCurrentUser(): Promise<User | null> {
-  try {
-    const cookieStore = await cookies();
-    const sessionCookie = cookieStore.get("session")?.value;
-    
-    if (!sessionCookie) {
-      return null;
-    }
-    
-    // Verify session cookie
-    const decodedClaims = await auth.verifySessionCookie(sessionCookie, true);
-    
-    // Get user info from database
-    const userRecord = await db
-      .collection("users")
-      .doc(decodedClaims.uid)
-      .get();
-    
-    if (!userRecord.exists) {
-      return null;
-    }
-    
-    return {
-      ...userRecord.data(),
-      id: userRecord.id,
-    } as User;
-  } catch (error: unknown) {
-    console.error("Error getting current user:", error);
-    
-    // Invalid or expired session
-    return null;
-  }
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get("session")?.value;
+  if (!sessionCookie) return null;
+
+  const decodedClaims = await auth.verifySessionCookie(sessionCookie, true);
+
+  // get user info from db
+  const userRecord = await db
+    .collection("users")
+    .doc(decodedClaims.uid)
+    .get();
+  if (!userRecord.exists) return null;
+
+  return {
+    ...userRecord.data(),
+    id: userRecord.id,
+  } as User;
 }
 
 // Check if user is authenticated
-export async function isAuthenticated(): Promise<boolean> {
-  try {
-    const user = await getCurrentUser();
-    return !!user;
-  } catch (error: unknown) {
-    console.error("Error checking authentication:", error);
-    return false;
-  }
-}
 
 // Additional helper function to refresh session
 export async function refreshSession(idToken: string) {
@@ -245,4 +223,77 @@ export async function refreshSession(idToken: string) {
       message: "Failed to refresh session",
     };
   }
+}
+
+// export async function getInterviewByUserId(userId: string): Promise<Interview[] | null> {
+  
+
+//     const interviews = await db
+//       .collection('interviews')
+//       .where('userId', '==', userId)
+//       .orderBy('createdAt', 'desc')
+//       .get();
+   
+//     return interviews.docs.map((doc) => ({
+//       id: doc.id,
+//       ...doc.data()
+//     })) as Interview[];
+
+// }
+
+
+// export async function getLatestInterviews(params: GetLatestInterviewsParams): Promise<Interview[] | null> {
+//   try {
+//     const { userId, limit = 10 } = params;
+
+//     // Validate required parameters
+   
+
+//     const interviews = await db
+//       .collection('interviews')
+//       .where('finalized', '==', true)
+//       .where('userId', '!=', userId)
+//       .orderBy('userId') // Required when using != operator
+//       .orderBy('createdAt', 'desc')
+//       .limit(limit)
+//       .get();
+   
+//     if (interviews.empty) {
+//       return null;
+//     }
+
+//     return interviews.docs.map((doc) => ({
+//       id: doc.id,
+//       ...doc.data()
+//     })) as Interview[];
+//   } catch (error) {
+//     console.error('Error fetching latest interviews:', error);
+//     return null;
+//   }
+// }
+
+// export async function getLatestInterviews(params: GetLatestInterviewsParams): Promise<Interview[] | null> {
+  
+//     const { userId, limit = 20 } = params;
+    
+//     // Check if userId is valid before querying
+   
+//     const interviews = await db
+//       .collection('interviews')
+//       .where('finalized', '==', true)
+//       .where('userId', '!=', userId)
+//       .orderBy('createdAt', 'desc')
+//       .limit(limit)
+//       .get();
+   
+//     return interviews.docs.map((doc) => ({
+//       id: doc.id,
+//       ...doc.data()
+//     })) as Interview[];
+  
+// }
+
+export async function isAuthenticated() {
+  const user = await getCurrentUser();
+  return !!user;
 }
